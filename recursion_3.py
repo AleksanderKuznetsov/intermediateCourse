@@ -4,7 +4,7 @@ one operation of removing the first element is allowed pop(0)
 """
 
 
-def len_list(array):
+def len_list(array) -> int:
     """
     :param array: start array
     :return: count
