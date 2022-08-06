@@ -19,13 +19,14 @@ with open('lesson2_json_exp.json', 'r', encoding='utf-8') as json_file:
 
 # Создадим словарь
 user = {}
-# Заполним словарь уникальными пользователями,
-# и добавим шаблон для подсчета задач и количества выполнения.
-for key in json2:
-    user[key["userId"]] = {"num": 0, "completed": 0}
 
 # Посчитаем задачи и количество выполнений.
 for key in json2:
+    # Проверим ключ на наличие. Если нет - добавим с нулевым подсчетом.
+    if key["userId"] not in user:
+        user[key["userId"]] = {"num": 0, "completed": 0}
+    # Считаем количество задач.
     user[key["userId"]]["num"] += 1
+    # Считаем количество выполнений.
     if key["completed"]:
         user[key["userId"]]["completed"] += 1
