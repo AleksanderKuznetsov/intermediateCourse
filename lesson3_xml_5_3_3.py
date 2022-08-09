@@ -6,12 +6,12 @@
 import xml.etree.ElementTree as ETree
 
 
-def rec_tag(tag, items, array):
+def rec_tag(tag: str, items: list, array: list) -> list:
     """
     Рекурсивная функция.
     :param tag: Тег, который ищем.
     :param items: Сканируемый узел.
-    :param count: Подсчет узлов.
+    :param array: Подсчет узлов.
     :return: Список array.
     """
     for i in range(len(items)):
@@ -24,7 +24,7 @@ def rec_tag(tag, items, array):
     return array[0]
 
 
-def main(tag):
+def main(tag: str) -> list:
     """
     Основная функция. Отходим от глобальных переменных.
     :param tag: Искомый тег
@@ -34,6 +34,3 @@ def main(tag):
     root = xml1.getroot()
     array = [0]
     return rec_tag(tag, root, array)
-
-
-print(main('name'))

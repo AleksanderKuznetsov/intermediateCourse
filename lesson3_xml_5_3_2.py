@@ -6,7 +6,7 @@
 import xml.etree.ElementTree as ETree
 
 
-def rec_tag(tag, items, array):
+def rec_tag(tag: str, items: list, array: list) -> list:
     """
     Рекурсивная функция.
     :param tag: Тег, который ищем.
@@ -14,6 +14,7 @@ def rec_tag(tag, items, array):
     :param array: Список, в который добавляем найденные значения тега.
     :return: Список array.
     """
+    print(type(items))
     for i in range(len(items)):
         if items[i].tag == tag:
             array.append(items[i].text)
@@ -24,7 +25,7 @@ def rec_tag(tag, items, array):
     return array
 
 
-def main(tag):
+def main(tag: str) -> list:
     """
     Основная функция. Отходим от глобальных переменных.
     :param tag: Искомый тег
