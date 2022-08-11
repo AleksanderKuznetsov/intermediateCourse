@@ -1,0 +1,10 @@
+<data>
+<name>Petya</name>
+<age>23</age>
+<sex>true</sex>
+<languages>
+<language name="Python">9</language>
+<language name="Java">7</language>
+<language name="C#">8</language>
+</languages>
+</data>
