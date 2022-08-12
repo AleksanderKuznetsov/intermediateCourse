@@ -3,7 +3,10 @@
 по заданному тегу в XML-документе
 """
 import xml.etree.ElementTree as ETree
+from lesson4_xml_6_6_3_new_file import new_file
 
+# Создать файл.
+new_file()
 # Спарсить файл.
 xml1 = ETree.parse('demo2.xml')
 # Получить корневой узел

@@ -18,6 +18,7 @@ def node_list(root_node, tag: str) -> list:
     :param tag: Тег.
     :return: Список узлов.
     """
+
     array = []
     # Проверить дочерние элементы корневого узла.
     if len(root_node.findall(tag)) > 0:
