@@ -2,12 +2,6 @@
 Написать функцию, которая формирует список всех узлов
 по заданному тегу в XML-документе.
 """
-import xml.etree.ElementTree as ETree
-
-# Спарсить файл.
-xml1 = ETree.parse('demo.xml')
-# Получить корневой узел
-root = xml1.getroot()
 
 
 def node_list(root_node, tag: str) -> list:

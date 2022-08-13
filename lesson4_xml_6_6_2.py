@@ -2,19 +2,14 @@
 Написать функцию, которая находит родителя заданного узла,
 и возвращает его (тип Element).
 """
-import xml.etree.ElementTree as ETree
-
-# Спарсить файл.
-xml1 = ETree.parse('demo.xml')
-# Получить корневой узел
-root = xml1.getroot()
 
 
-def node_parent(tag: str) -> str:
+def node_parent(root, tag: str) -> str:
     """
     Вернуть родительский элемент.
     Проверяем наличие искомого тега в дочерних элементах
     и возвращаем родителя, если нашли.
+    :param root: Корневой узел.
     :param tag: Тег искомого узла.
     :return: Родительский элемент..
     """

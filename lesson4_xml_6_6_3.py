@@ -2,21 +2,13 @@
 Написать функцию, которая удаляет все узлы
 по заданному тегу в XML-документе
 """
-import xml.etree.ElementTree as ETree
-from lesson4_xml_6_6_3_new_file import new_file
-
-# Создать файл.
-new_file()
-# Спарсить файл.
-xml1 = ETree.parse('demo2.xml')
-# Получить корневой узел
-root = xml1.getroot()
 
 
-def node_remove(tag: str) -> bool:
+def node_remove(root, tag: str) -> bool:
     """
     Возвращаем True скорее для тестов. Не по заданию.
     Глубина вложенности узлов - не более двух.
+    :param root: Корневой элемент.
     :param tag: Тег.
     :return: True.
     """
@@ -30,7 +22,4 @@ def node_remove(tag: str) -> bool:
         # Проверить первый уровень вложенности.
         if node.tag == tag:
             root.remove(node)
-    # Сохранить изменения в файл.
-    xml1.write('demo2.xml')
-
     return True
