@@ -1,10 +1,10 @@
 """
-Создать из класса List2 итератор с конструктором,
+Создать из класса List1 итератор с конструктором,
 чтобы он работал с любого заданного значения.
 """
 
 
-class List2:
+class List1:
     """
     Метод __init__ - начальное значение
     Метод __iter__ - начальная инициализация итератора
@@ -22,10 +22,6 @@ class List2:
         current = self.start
         self.start = self.start * 2
         self.count += 1
-        if self.count < 10:
+        if self.count <= 5:
             return current
         raise StopIteration
-
-
-for n in List2(10):
-    print(n)

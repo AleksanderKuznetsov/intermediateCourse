@@ -26,20 +26,15 @@ class List2:
         self.start = self.start * 2
         self.count += 1
 
-        # Если в параметре бесконечность и счетчик self.count вышел за
-        # пределы параметра N, обнулить первоначальные счетчики.
-        if not self.flag and self.count > self.stop:
-            self.count = 0
-            self.start = 1
-
-        # Подсчет значений
+        # Подсчет значений. Работает и для True и для False.
         if self.count <= self.stop:
             return current
+
+        # Если бесконечность, возвращаемся к __iter__
+        if not self.flag:
+            self.__iter__()
+            return self.__next__()
 
         # Генерируем исключение, если выбрана не бесконечность
         # и параметр N меньше или равен заданной величине.
         raise StopIteration
-
-
-for n in List2(10, False):
-    print(n)
