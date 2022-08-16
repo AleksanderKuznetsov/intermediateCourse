@@ -13,6 +13,11 @@ class List2:
     Метод __next__ - следующее значение
     """
     def __init__(self, stop: int, flag: bool):
+        """
+
+        :param stop: Сколько итераций провести.
+        :param flag: True - бесконечность. False - НЕбесконечность
+        """
         self.stop = stop
         self.flag = flag
 
@@ -31,7 +36,7 @@ class List2:
             return current
 
         # Если бесконечность, возвращаемся к __iter__
-        if not self.flag:
+        if self.flag:
             self.__iter__()
             return self.__next__()
 

@@ -54,7 +54,7 @@ class TestWork(unittest.TestCase):
         Задание 5.2. Тестирование общего результата - не бесконечность.
         """
         array = []
-        for n in List2(5, True):
+        for n in List2(5, False):
             array.append(n)
         self.assertTrue(array == [1, 2, 4, 8, 16])
 
@@ -63,7 +63,7 @@ class TestWork(unittest.TestCase):
         Задание 5.2. Тестирование нулей.
         """
         count = 0
-        for n in List2(0, True):
+        for n in List2(0, False):
             count += 1
         self.assertTrue(count == 0)
 
@@ -72,7 +72,7 @@ class TestWork(unittest.TestCase):
         Задание 5.1. Тестирование большого числа.
         """
         array = []
-        for n in List2(100, True):
+        for n in List2(100, False):
             array.append(n)
         self.assertTrue(array[-1] == 633825300114114700748351602688)
 
