@@ -41,6 +41,22 @@ def long_process(array: list, start: int,
     return results
 
 
+def time_sleeps(array: list, sec: float) -> bool:
+    """
+    Рекурсивная функция. Проверить выполнение функции.
+    Если работает - таймаут.
+    :param array: массив с процессами.
+    :param sec: пауза в секундах.
+    :return: bool
+    """
+
+    for ar in array:
+        if ar.is_alive():
+            time.sleep(sec)
+            return time_sleeps(array, sec)
+    return True
+
+
 def main(array: list, n: int) -> int:
     """
     Главная функция.
@@ -63,10 +79,9 @@ def main(array: list, n: int) -> int:
     # Запустить процессы
     for i in range(len(threads)):
         threads[i].start()
-        # На последнем процессе делаем задержку, чтобы продолжение программы
-        # не началось быстрее, чем он обсчитается.
-        if i == n - 1:
-            time.sleep(5)  # 5 секунд - эмпирически. Работает на 100 млн. элементов.
+
+    # Рекурсией проверить работают ли еще потоки.
+    time_sleeps(threads, 0.5)
 
     # Суммируем элементы результирующего массива.
     for res in result:
