@@ -6,6 +6,7 @@
 """
 import random
 import time
+import threading
 from threading import Thread
 
 
@@ -36,7 +37,7 @@ def long_process(array: list, start: int,
     summa = 0
     for i in range(start, len(array), step):
         summa += array[i]
-        # time.sleep(0.1)
+        time.sleep(0.1)
     results.append(summa)
     return results
 
@@ -66,11 +67,8 @@ def main(array: list, n: int) -> int:
         time.sleep(0.5)
 
     # Убедиться, что процессы уже не работают
-    while len(threads) > 0:
-        if threads[0].is_alive():
-            time.sleep(0.5)
-        else:
-            threads.pop()
+    while len(threading.enumerate()) > 1:
+        time.sleep(0.1)
 
     # Суммируем элементы результирующего массива.
     for res in result:

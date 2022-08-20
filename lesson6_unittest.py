@@ -13,16 +13,18 @@ class TestWork(unittest.TestCase):
 
     def test_result(self):
         """
-        Сравнить результат работы функции с перебором циклом
+        Сравнить результат работы функции с заведомо рассчитанным результатом
         """
-        array = add_array(100000)
+        array = []
+        for i in range(1, 1001):
+            array.append(i)
+
         function_result = main(array, 10)
 
-        loop_result = 0
-        for arr in array:
-            loop_result += arr
+        self.assertTrue(function_result == 500500)
 
-        self.assertTrue(round(function_result, 4) == round(loop_result, 4))
+
+
 
 
 if __name__ == '__main__':
