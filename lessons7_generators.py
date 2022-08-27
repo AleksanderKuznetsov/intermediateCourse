@@ -24,29 +24,35 @@ def long_process(id, n):
 def generator_process(array: list) -> dict:
     """
     Основная функция
-    :param array: Исходный список
-    :return: Словарь с результатами
+    :param array: исходный список
+    :return: словарь результата расчетов
     """
-    max_count = 0  # Максимальное число в исходном массиве
-    mass = []  # Массив генераторов
-    result = {}  # Словарь результата
+    result = {}  # словарь результата расчетов.
+    dict = {}  # словарь генератора.
+    processing = {}  # словарь обработанных элементов.
 
-    # Найти максимальное число в исходном массиве.
-    # Это будет количество итераций в обработке массива.
-    for count in array:
-        if count > max_count:
-            max_count = count
+    # Создать словарь результата расчетов, запустить генератор по ключам.
+    i = 0
+    while len(result) != len(array):
+        result[i] = None
+        dict[i] = long_process(i, array[i])
+        i += 1
 
-    # Обработка исходного массива. Наполнить ключами словарь.
-    # Добавить в массив генераторы.
-    for i, arr in enumerate(array):
-        result['id' + str(i)] = None
-        mass.append(long_process('id' + str(i), array[i]))
+    i = 0
+    while len(processing) != len(array):
+        # Если расчет не окончен - продолжить работу генератора
+        if result[i] is None:
+            result[i] = next(dict[i])
 
-    # Расчет результата генераторами.
-    for count in range(max_count):
-        for mas in range(len(mass)):
-            if result['id' + str(mas)] is None:
-                result['id' + str(mas)] = next(mass[mas])
+        # Если расчет окончен - внести этот элемент в словарь
+        # обработанных элементов.
+        elif result[i] is not None:
+            processing[i] = True
+
+        # Прибавить счетчик.
+        i += 1
+        # Обнулить счетчик.
+        if i == len(array):
+            i = 0
 
     return result
