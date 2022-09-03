@@ -57,4 +57,4 @@ def parsing(url):
     return result
 
 
-# print(parsing('https://www.olx.ua/d/transport/legkovye-avtomobili/lug/?currency=USD'))
+print(parsing('https://www.olx.ua/d/transport/legkovye-avtomobili/lug/?currency=USD'))
