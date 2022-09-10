@@ -1,42 +1,60 @@
+"""
+Серверная часть.
+"""
 import socket
-import threading
-import socketserver
+import os
+from _thread import *
+
+ServerSideSocket = socket.socket()
+host = '127.0.0.1'
+port = 2004
+ThreadCount = 0
+
+# Подключиться
+try:
+    ServerSideSocket.bind((host, port))
+except socket.error as e:
+    print(str(e))
+print('Socket is listening..')
+
+# Слушать до 5 соединений
+ServerSideSocket.listen(5)
 
 
-class ThreadedTCPRequestHandler(socketserver.BaseRequestHandler):
-    """Класс Обработчика клиентских запросов"""
-
-    def handle(self):
-        data = str(self.request.recv(1024), 'ascii')
-        cur_thread = threading.current_thread()
-        response = bytes(f"{cur_thread.name}: {data}", 'ascii')
-        self.request.sendall(response)
-
-
-class ThreadedTCPServer(socketserver.ThreadingMixIn, socketserver.TCPServer):
+def multi_threaded_client(connection):
     """
-    Класс асинхронного сервера
+    Работа с клиентом
     """
-    pass
+    connection.send(str.encode('Server is working:'))
+    while True:
+        data = connection.recv(1024)  # Получить данные на сервере.
+        print('Client said: ', data.decode('utf-8'))
+        response = 'Server answered: ' + data.decode('utf-8')  # Ответ клиенту.
+        # Если клиент выходит - он отправляет 'exit'
+        if data.decode('utf-8') == 'exit':
+            connection.sendall(b'client closed')
+            break
+        # Клиент может закрыть сервер - он отправляет 'server close'
+        if data.decode('utf-8') == 'server close':
+            connection.sendall(b'server closed')
+            ServerSideSocket.close()
+        connection.sendall(str.encode(response))
+    # Закрыть соединение.
+    connection.close()
 
 
-def client(ip, port, message):
-    """Функция клиента"""
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.connect((ip, port))
-        sock.sendall(bytes(message, 'ascii'))
-        response = str(sock.recv(1024), 'ascii')
-        print(f"Принято: {response}")
-
-
-# создаем сервер асинхронный сервер
-server = ThreadedTCPServer(('localhost', 12345), ThreadedTCPRequestHandler)
-
-# Запускаем поток с сервером - этот поток затем
-# запустит еще один поток для каждого запроса
-server_thread = threading.Thread(target=server.serve_forever)
-# Выйдем из потока сервера, когда основной поток завершится
-server_thread.daemon = True
-server_thread.start()
-print("Серверный цикл, работающий в потоке:", server_thread.name)
+while True:
+    try:
+        # Подключение нового клиента.
+        Client, address = ServerSideSocket.accept()
+        # Выводим IP и порт.
+        print('Connected to: ' + address[0] + ':' + str(address[1]))
+        # Новый поток для каждого клиента.
+        start_new_thread(multi_threaded_client, (Client, ))
+        # Посчитать потоки
+        ThreadCount += 1
+        print('Thread Number: ' + str(ThreadCount))
+    # Если сервер закрыли раньше, и клиент стучится в уже закрытый сокет.
+    except OSError:
+        break
 
